@@ -1,5 +1,7 @@
 import tkinter as tk
 import ast
+import random
+
 #criar a porra toda
 #########################################
 janela = tk.Tk()
@@ -9,12 +11,13 @@ janela.title("Fix ts rn is so kevin🥀")
 #Código que roda quando eu quero
 #########################################
 
+
+
 def analise(code):
     def findTab(i):
         findTabs = 0
         j = i-1
         while j >= 3:
-            print("look:", code[j-3:j])
             if code[j-3:j] == "   ":
                 findTabs += 1
                 j-=3
@@ -23,6 +26,46 @@ def analise(code):
             j -= 1
         return(findTabs)
     
+    def analise(s):
+        out = ""
+        c = {'(':')','[':']','{':'}','"':'ma',"'":"ma"}
+        c2 = {')':"(","]":"[","}":"{"}
+
+        i = 0
+        stack = []
+        while i < len(s):
+            char = s[i]
+            if char in c.keys():
+                if c[char] == "ma":
+                    i += 1
+                    while i < len(s) and s[i] != char:
+                        i += 1
+                else:
+                    stack.append(char)
+            elif char in c2.keys():
+                if stack and stack[-1] == c2[char]:
+                    stack.pop()
+                else:
+                    return("if inline")
+
+            elif char == ":":
+                if not stack:
+                    return(True, i)
+
+            elif char == "e":
+                try:
+                    if s[i+1:i+4] == "lse":
+                        if not stack:
+                            return("if ternario")
+                except:
+                    pass
+
+            elif stack == []:
+                out += char
+            i += 1
+        return("saporran ao conmpensa")
+
+
     biblios = []
     with open("library.txt", "r") as libr:
         biblios = ast.literal_eval(libr.read())
@@ -37,7 +80,6 @@ def analise(code):
                 viuPrint = True
                 fried = biblios[0] + fried
                 nTabs = findTab(i)
-                print(nTabs)
             if nTabs != 0:
                 fried = fried[:-(nTabs*4)]
 
@@ -45,6 +87,33 @@ def analise(code):
 
             fried += tabfix
             i += 5
+
+
+        if code[i:i+2] == "if":
+            ans = analise(code[i:])
+            if ans[0] == True:
+                idxdoisponto = i+ans[1]
+                arg = code[i+2:idxdoisponto]
+
+                bvalue = random.randint(2, 12)
+                pos = random.randint(0,99)
+                final = " or" + arg
+                for i in range(bvalue):
+                    pos = random.randint(0,99)
+                    final = f" or {biblios[2][pos]}" + final
+                bvalue = random.randint(2, 12)
+                for i in range(bvalue):
+                    pos = random.randint(0,99)
+                    final += f" or {biblios[2][pos]}"
+
+                final += ":"
+                final = final[4:]
+
+                fried += "if "
+                fried += final
+                i = idxdoisponto
+            else:
+                i += 2
         else:
             fried += code[i]  
         i += 1
@@ -58,8 +127,8 @@ def enviar():
     output.config(state=tk.NORMAL)
     output.delete("1.0", tk.END)
     output.insert(tk.END, str(result))
-    janela.clipboard_clear()
-    janela.clipboard_append(result)
+    # janela.clipboard_clear()
+    # janela.clipboard_append(result)
     janela.update()
 
 def atualizar(*args):
@@ -85,7 +154,6 @@ output.grid(row=1, column=2, padx=10, pady=10)
 input = tk.Text(janela, height=50, width=75)
 input.grid(row=1, column=1, padx=10, pady=10)
 input.bind("<Return>", atualizar)
-
 
 #necessario
 #########################################
