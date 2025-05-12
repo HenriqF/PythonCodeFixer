@@ -70,6 +70,7 @@ def analise(code):
     with open("library.txt", "r") as libr:
         biblios = ast.literal_eval(libr.read())
 
+
     viuPrint = False
     fried = ""
 
@@ -94,16 +95,16 @@ def analise(code):
             if ans[0] == True:
                 idxdoisponto = i+ans[1]
                 arg = code[i+2:idxdoisponto] if code[i:i+2] == "if" else code[i+4:idxdoisponto]
-
+                
                 bvalue = random.randint(4, 20)
-                pos = random.randint(0,99)
+                pos = random.randint(0,217)
                 final = " or" + arg
                 for j in range(bvalue):
-                    pos = random.randint(0,99)
+                    pos = random.randint(0,217)
                     final = f" or {biblios[2][pos]}" + final
                 bvalue = random.randint(4, 20)
                 for j in range(bvalue):
-                    pos = random.randint(0,99)
+                    pos = random.randint(0,217)
                     final += f" or {biblios[2][pos]}"
 
                 final += ":"
