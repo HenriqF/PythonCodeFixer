@@ -89,31 +89,34 @@ def analise(code):
             i += 5
 
 
-        if code[i:i+2] == "if":
+        if code[i:i+2] == "if" or code[i:i+4] == "elif":
             ans = analise(code[i:])
             if ans[0] == True:
                 idxdoisponto = i+ans[1]
-                arg = code[i+2:idxdoisponto]
+                arg = code[i+2:idxdoisponto] if code[i:i+2] == "if" else code[i+4:idxdoisponto]
 
-                bvalue = random.randint(2, 12)
+                bvalue = random.randint(4, 20)
                 pos = random.randint(0,99)
                 final = " or" + arg
-                for i in range(bvalue):
+                for j in range(bvalue):
                     pos = random.randint(0,99)
                     final = f" or {biblios[2][pos]}" + final
-                bvalue = random.randint(2, 12)
-                for i in range(bvalue):
+                bvalue = random.randint(4, 20)
+                for j in range(bvalue):
                     pos = random.randint(0,99)
                     final += f" or {biblios[2][pos]}"
 
                 final += ":"
                 final = final[4:]
 
-                fried += "if "
+                fried += "if " if code[i:i+2] == "if" else "elif "
                 fried += final
                 i = idxdoisponto
             else:
-                i += 2
+                fried += "if " if code[i:i+2] == "if" else "elif "
+                i += 2 if code[i:i+2] == "if" else 4
+
+
         else:
             fried += code[i]  
         i += 1
@@ -153,7 +156,7 @@ output.grid(row=1, column=2, padx=10, pady=10)
 
 input = tk.Text(janela, height=50, width=75)
 input.grid(row=1, column=1, padx=10, pady=10)
-input.bind("<Return>", atualizar)
+input.bind("<KeyRelease>", atualizar)
 
 #necessario
 #########################################
