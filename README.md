@@ -6,4 +6,5 @@ No momento, ele melhora as seguintes estruturas:
 ```python
 print()
 if true:
+elif true:
 ```
