@@ -1,6 +1,7 @@
 import tkinter as tk
 import ast
 import random
+import re
 
 #criar a porra toda
 #########################################
@@ -10,8 +11,6 @@ janela.title("Fix ts rn is so kevin🥀")
 
 #Código que roda quando eu quero
 #########################################
-
-
 
 def analise(code):
     def findTab(i):
@@ -65,63 +64,80 @@ def analise(code):
             i += 1
         return("saporran ao conmpensa")
 
-
     biblios = []
     with open("library.txt", "r") as libr:
         biblios = ast.literal_eval(libr.read())
-
 
     viuPrint = False
     fried = ""
 
     i = 0
+    ignore = {}
+    for match in re.finditer(r'"(.*?)"', code):
+        ignore[match.start(0)] = match.end(0)
+    
     while i < len(code):
-        if code[i:i+6] == "print(":
-            if not viuPrint:
-                viuPrint = True
-                fried = biblios[0] + fried
-                nTabs = findTab(i)
-            if nTabs != 0:
-                fried = fried[:-(nTabs*4)]
-
-            tabfix = '\n'.join('    '*nTabs + line for line in biblios[1].splitlines())
-
-            fried += tabfix
-            i += 5
-
-
-        if code[i:i+2] == "if" or code[i:i+4] == "elif":
-            ans = analise(code[i:])
-            if ans[0] == True:
-                idxdoisponto = i+ans[1]
-                arg = code[i+2:idxdoisponto] if code[i:i+2] == "if" else code[i+4:idxdoisponto]
-                
-                bvalue = random.randint(4, 20)
-                pos = random.randint(0,217)
-                final = " or" + arg
-                for j in range(bvalue):
-                    pos = random.randint(0,217)
-                    final = f" or {biblios[2][pos]}" + final
-                bvalue = random.randint(4, 20)
-                for j in range(bvalue):
-                    pos = random.randint(0,217)
-                    final += f" or {biblios[2][pos]}"
-
-                final += ":"
-                final = final[4:]
-
-                fried += "if " if code[i:i+2] == "if" else "elif "
-                fried += final
-                i = idxdoisponto
-            else:
-                fried += "if " if code[i:i+2] == "if" else "elif "
-                i += 2 if code[i:i+2] == "if" else 4
-
-
+        if i in ignore:
+            fried += (code[i:ignore[i]+1])
+            i = ignore[i]+1  
         else:
-            fried += code[i]  
-        i += 1
-            
+            if code[i:i+6] == "print(":
+                if not viuPrint:
+                    viuPrint = True
+                    fried = biblios[0] + fried
+                    nTabs = findTab(i)
+                if nTabs != 0:
+                    fried = fried[:-(nTabs*4)]
+
+                tabfix = '\n'.join('    '*nTabs + line for line in biblios[1].splitlines())
+
+                fried += tabfix
+                i += 5
+
+            elif code[i:i+2] == "if" or code[i:i+4] == "elif":
+                ans = analise(code[i:])
+                if ans[0] == True:
+                    idxdoisponto = i+ans[1]
+                    arg = code[i+2:idxdoisponto] if code[i:i+2] == "if" else code[i+4:idxdoisponto]
+                    
+                    bvalue = random.randint(4, 20)
+                    pos = random.randint(0,217)
+                    final = " or" + arg
+                    for j in range(bvalue):
+                        pos = random.randint(0,217)
+                        final = f" or {biblios[2][pos]}" + final
+                    bvalue = random.randint(4, 20)
+                    for j in range(bvalue):
+                        pos = random.randint(0,217)
+                        final += f" or {biblios[2][pos]}"
+
+                    final += ":"
+                    final = final[4:]
+
+                    fried += "if " if code[i:i+2] == "if" else "elif "
+                    fried += final
+                    i = idxdoisponto
+
+                else:
+                    fried += "if " if code[i:i+2] == "if" else "elif "
+                    i += 2 if code[i:i+2] == "if" else 4
+
+            elif code[i] == "=" and code[i+1:i+2] != "=" and code[i-1:i] not in "!=><":
+                fried += code[i]
+                fried += " 'skandel' if ("
+
+                fuckNum = random.randint(2,6)
+                fried += biblios[2][random.randint(0,217)]
+                for skandel in range(fuckNum-1):
+                    fried += f" or {biblios[2][random.randint(0,217)]}"
+
+                fried += ") else"
+                if code[i+1:i+2] != " ":
+                    fried += " "
+            else:
+                fried += code[i]  
+            i += 1
+                
     return(fried)
 #funcoes tkinter
 #########################################
