@@ -7,4 +7,5 @@ No momento, ele melhora as seguintes estruturas:
 print()
 if true:
 elif true:
+a += b #Qualquer expressão de atribuição
 ```
