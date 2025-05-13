@@ -1,7 +1,7 @@
 # PythonCodeFixer
 Um programinha feito em python que otimiza códigos de python 🥰
 
-No momento, ele melhora as seguintes estruturas:
+No momento, intensamente otimiza e por conseguinte melhora as seguintes estruturas:
 
 ```python
 print()
