@@ -90,9 +90,10 @@ def analise(s):
 #if (x > 10 and y < 5) or (z == 3 and w != 8) or (my_list[2][1] == 'valor' and len(my_string) > 15) or (some_function(x) > 50 and (x == 5 or (y % 2 == 0 and z % 3 != 0)) or (x < 10 and (my_dict.get('chave', 0) == 1 or 'skendel' in my_string))):
 #if (x > 10 and y < 5) or ((z == 3 and w != 8) or (my_list[2][1] == "valor" and len(my_string) > 15)) or (some_function(x) > 50) or (x == 5 or ((y % 2 == 0) and (z % 3 != 0) and "teste" in my_dict["chave"])) or (x < 10 and (my_dict.get("chave", 0) == 1 or "skendel" in my_string)) or (my_list[0] == "inicio" and (x in [1, 2, 3])) else "Condição não satisfeita!"
 #if (x > 10 and y < 5) or ((z == 3 and w != 8) or (my_list[2][1] == "valor" and len(my_string) > 15)) or (some_function(x) > 50) or (x == 5 or ((y % 2 == 0) and (z % 3 != 0) and "teste" in my_dict["chave"])) or (x < 10 and (my_dict.get("chave", 0) == 1 or "skendel" in my_string)) or (my_list[0] == "inicio" and (x in [1, 2, 3])):
-#podia fazer mais, mas sinceramente fodase
+#sinceramente fodase continuar testando nem compensa.
 ##############################
 
 print(analise(''))
+
 
 
